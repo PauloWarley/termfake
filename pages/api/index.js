@@ -1010,6 +1010,7 @@ export default function handler(req, res) {
   
 
   var correct_word
+  var word = req.body.word
 
 
   try {
@@ -1035,11 +1036,15 @@ export default function handler(req, res) {
   }
 
   console.log("5")
+  
   correct_word = fs.readFileSync('word.txt', 'utf8')
+
+
+
   console.log("CorrectWord", correct_word)
 
 
-  var word = req.body.word
+  
 
   console.log(req.body)
 
