@@ -146,74 +146,95 @@ export default function Home() {
 
           var letras  = response.data
 
-          // letter wrong
-          // letter place
-          // letter right
-          // Não Encontrados
+          if (response.data === "Palavra Inválida"){
 
-          var finded = []
+            document.getElementById("msg").setAttribute("open","true")
+            document.getElementById("msg").setAttribute("style", "animation: 0.25s linear 0s 1 normal forwards running popup")
 
-          for (var i in letras){
-
-            
-
-            for (var j in letras[i]){
-
-              console.log(i, letras[i][j])
-
-              if (letras[i][j].exist && letras[i][j].position){
-
-                document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter right")
-          
-              }
-              if (letras[i][j].exist && !letras[i][j].position){
-
-                document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter place")
-          
-              }
-              if (!letras[i][j].exist && !letras[i][j].position){
-
-                document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter wrong")
+            document.getElementById("board").childNodes[position[0]].setAttribute("style", "animation: 0.75s ease-in-out 0s 1 normal none running rownope;")
                 
-                document.getElementById(`kbd_${i.toLowerCase()}`).setAttribute("class", "wrong")
+            // setPosition([position[0]-1, position[1]])
+
+          }
+
+          else{
+
+            document.getElementById("msg").removeAttribute("open","true")
+            document.getElementById("msg").removeAttribute("style", "animation: 0.25s linear 0s 1 normal forwards running popup")
+
+            document.getElementById("board").childNodes[position[0]].removeAttribute("style", "animation: 0.75s ease-in-out 0s 1 normal none running rownope;")
                 
-                var wrongLetterTemp = wrongLetter
-                wrongLetterTemp.push(i)
-
-                console.log(wrongLetterTemp, "temp")
-                setWrongLetter(wrongLetterTemp)
 
 
-              }
-
+            position[0] ++
+            position[1] = 0
+            WordComplete = false
+    
+            for (var i = 0; i <= letterTam; i++){
+    
+              document.getElementById("board").childNodes[position[0]].childNodes[i].setAttribute("class", "letter empty")
+              
             }
 
 
+            // letter wrong
+            // letter place
+            // letter right
+            // Não Encontrados
 
-          }
-          // document.getElementById("board").childNodes[position[0]-1].childNodes[pos].setAttribute("class", "letter place")
-          
-          console.log(wrongLetter)
+            var finded = []
+
+            for (var i in letras){
+
+              
+
+              for (var j in letras[i]){
+
+                console.log(i, letras[i][j])
+
+                if (letras[i][j].exist && letras[i][j].position){
+
+                  document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter right")
             
+                }
+                if (letras[i][j].exist && !letras[i][j].position){
+
+                  document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter place")
+            
+                }
+                if (!letras[i][j].exist && !letras[i][j].position){
+
+                  document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter wrong")
+                  
+                  document.getElementById(`kbd_${i.toLowerCase()}`).setAttribute("class", "wrong")
+                  
+                  var wrongLetterTemp = wrongLetter
+                  wrongLetterTemp.push(i)
+
+                  console.log(wrongLetterTemp, "temp")
+                  setWrongLetter(wrongLetterTemp)
 
 
+                }
+
+              }
+
+
+
+            }
+            // document.getElementById("board").childNodes[position[0]-1].childNodes[pos].setAttribute("class", "letter place")
+            
+            // console.log(wrongLetter)
+
+          
+          }
+            
         })
         .catch(function (error) {
           console.log(error);
         });
         
 
-        position[0] ++
-        position[1] = 0
-        WordComplete = false
-
-        for (var i = 0; i <= letterTam; i++){
-
-          document.getElementById("board").childNodes[position[0]].childNodes[i].setAttribute("class", "letter empty")
-          
-        }
-
-        
       }
 
     }
@@ -240,7 +261,8 @@ export default function Home() {
 
 
       <div id="notify">
-        <div aria-live="assertive" tabIndex="0" id="msg"></div>
+        {/* <div aria-live="assertive" tabIndex="0" id="msg"></div> */}
+        <div aria-live="assertive" tabIndex="0" id="msg" >essa palavra não é válida</div>
       </div>
 
       <main onKeyDown={e => Type(e.nativeEvent.key.toUpperCase())}>
