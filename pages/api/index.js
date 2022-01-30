@@ -1,4 +1,4 @@
-const correct_word = "asnol"
+const correct_word = "local"
 
 export default function handler(req, res) {
   

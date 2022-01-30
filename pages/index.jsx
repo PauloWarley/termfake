@@ -8,6 +8,7 @@ export default function Home() {
 
   var [tecla, setTecla] = useState("")
   var [position, setPosition] = useState([0,0])
+  var [wrongLetter, setWrongLetter] = useState([])
 
   const letterTam = 4 // +1
   const lines = 5 // +1
@@ -42,7 +43,12 @@ export default function Home() {
 
   function Type(letter){
 
-    
+    // console.log("2 -", wrongLetter, wrongLetter.indexOf(letter.toLowerCase()))
+
+    if (wrongLetter.indexOf(letter.toLowerCase()) != -1){
+      console.log("Letra inutilizada!")
+      return
+    }
 
 
     if (letter === "BACKSPACE" || letter === "⌫"){
@@ -168,16 +174,26 @@ export default function Home() {
               if (!letras[i][j].exist && !letras[i][j].position){
 
                 document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter wrong")
-          
+                
+                document.getElementById(`kbd_${i.toLowerCase()}`).setAttribute("class", "wrong")
+                
+                var wrongLetterTemp = wrongLetter
+                wrongLetterTemp.push(i)
+
+                console.log(wrongLetterTemp, "temp")
+                setWrongLetter(wrongLetterTemp)
+
+
               }
 
             }
 
 
+
           }
           // document.getElementById("board").childNodes[position[0]-1].childNodes[pos].setAttribute("class", "letter place")
           
-
+          console.log(wrongLetter)
             
 
 
