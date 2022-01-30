@@ -1009,17 +1009,28 @@ const correct_word_list =
 export default function handler(req, res) {
   
 
-  var correct_word = fs.readFileSync('word.txt', 'utf8')
+  var correct_word
+
+
+  try {
+    fs.readFileSync('word.txt', 'utf8')
+  }
+  catch{
+    if(word === correct_word){
+      fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
+        if (err) throw err;
+        console.log('Saved!');
+      });
+    }
+  }
+
+  correct_word = fs.readFileSync('word.txt', 'utf8')
+
 
   var word = req.body.word
 
 
-  if(word === correct_word){
-    fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
-      if (err) throw err;
-      console.log('Saved!');
-    });
-  }
+ 
 
 
   console.log(req.body)
