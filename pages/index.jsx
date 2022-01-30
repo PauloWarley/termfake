@@ -229,7 +229,7 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Termo</title>
-        <meta name="description" content="Termo" />
+        <meta name="description" content="Desevenlopado by PWARR" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
