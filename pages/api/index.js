@@ -1036,10 +1036,6 @@ export default function handler(req, res) {
 
   var word = req.body.word
 
-
- 
-
-
   console.log(req.body)
 
   
