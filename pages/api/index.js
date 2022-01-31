@@ -1026,7 +1026,11 @@ export default function handler(req, res) {
       });
       console.log("4")
 
-      correct_word = fs.readFileSync('word.txt', 'utf8')
+      // correct_word = fs.readFileSync('word.txt', 'utf8')
+
+      fs.readFile("word.txt", "utf-8", (err, data) => {
+        console.log(data);
+      });
 
       console.log("4 - 1")
     
