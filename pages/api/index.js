@@ -1030,7 +1030,8 @@ export default function handler(req, res) {
 
       fs.readFile("word.txt", "utf-8", (err, data) => {
         console.log(data);
-        console.log("CorrectWord", correct_word)
+        console.log("CorrectWord", data)
+        res.status(200).json(data)
       });
 
       console.log("4 - 1")
@@ -1045,6 +1046,10 @@ export default function handler(req, res) {
   }
 
   console.log("5")
+
+  correct_word =  correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  // correct_word =  correct_word_list[0].normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  correct_word =  "linda"
   
   
 
