@@ -1072,14 +1072,8 @@ export default function handler(req, res) {
   .then(function (response) {
     // console.log(JSON.stringify(response.data));
 
-    if (response.data.length === 0){
-
-      // console.log(response.data)
-
-      res.status(200).json("Palavra Inválida")
-
-    }
-    else{
+    
+    if (word === correct_word || response.data.length != 0){
 
       var correct_word_split = correct_word.split("")
 
@@ -1135,7 +1129,13 @@ export default function handler(req, res) {
     
       res.status(200).json(result)
     }
-  
+    else {
+
+      // console.log(response.data)
+
+      res.status(200).json("Palavra Inválida")
+
+    }
 
 
   })
