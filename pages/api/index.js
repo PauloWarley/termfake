@@ -1030,6 +1030,7 @@ export default function handler(req, res) {
 
       fs.readFile("word.txt", "utf-8", (err, data) => {
         console.log(data);
+        console.log("CorrectWord", correct_word)
       });
 
       console.log("4 - 1")
@@ -1047,7 +1048,7 @@ export default function handler(req, res) {
   
   
 
-  console.log("CorrectWord", correct_word)
+  // console.log("CorrectWord", correct_word)
 
 
   
