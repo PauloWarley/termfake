@@ -1049,7 +1049,7 @@ export default function handler(req, res) {
 
   correct_word =  correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, "")
   // correct_word =  correct_word_list[0].normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-  correct_word =  "bruma"
+  correct_word =  "nobre"
   
   
 
