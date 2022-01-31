@@ -10,8 +10,8 @@ export default function Home() {
   var [position, setPosition] = useState([0,0])
   var [wrongLetter, setWrongLetter] = useState([])
 
-  ///const letterTam = 4 // +1
-  ///const lines = 5 // +1
+  const letterTam = 4 // +1
+  const lines = 5 // +1
 
   var WordComplete = false
 
@@ -46,7 +46,7 @@ export default function Home() {
     // console.log("2 -", wrongLetter, wrongLetter.indexOf(letter.toLowerCase()))
 
     if (wrongLetter.indexOf(letter.toLowerCase()) != -1){
-      ///console.log("Letra inutilizada!")
+      console.log("Letra inutilizada!")
       return
     }
 
@@ -62,8 +62,8 @@ export default function Home() {
     // console.log()
 
     if (letter.length === 1 && position[1] <= letterTam && letter != "⌫"){
-      ///console.log("Digitando... ", position[0], position[1])
-      ///console.log(letter)
+      console.log("Digitando... ", position[0], position[1])
+      console.log(letter)
       ChangePositionLetter (letter)
      
     }
@@ -83,7 +83,7 @@ export default function Home() {
     // document.getElementById("board").childNodes[position[0]].childNodes[position[1]-1].textContent = ""
     
     if (position[1] <= letterTam){
-      ///console.log("Deletando Tecla 1 ", position[0], position[1])
+      console.log("Deletando Tecla 1 ", position[0], position[1])
       // position[1] --
       // document.getElementById("board").childNodes[position[0]].childNodes[position[1]].textContent = ""
       document.getElementById("board").childNodes[position[0]].childNodes[position[1]].textContent = ""
@@ -123,7 +123,7 @@ export default function Home() {
           
         }
 
-        ///console.log(word)
+        console.log(word)
 
         // word = "PASTO".toLowerCase()
         
@@ -142,7 +142,7 @@ export default function Home() {
         
         axios(config)
         .then(function (response) {
-          ///console.log(response.data);
+          console.log(response.data);
 
           var letras  = response.data
 
@@ -190,7 +190,7 @@ export default function Home() {
 
               for (var j in letras[i]){
 
-                ///console.log(i, letras[i][j])
+                console.log(i, letras[i][j])
 
                 if (letras[i][j].exist && letras[i][j].position){
 
@@ -211,7 +211,7 @@ export default function Home() {
                   var wrongLetterTemp = wrongLetter
                   wrongLetterTemp.push(i)
 
-                  ///console.log(wrongLetterTemp, "temp")
+                  console.log(wrongLetterTemp, "temp")
                   setWrongLetter(wrongLetterTemp)
 
 
@@ -231,7 +231,7 @@ export default function Home() {
             
         })
         .catch(function (error) {
-          ///console.log(error);
+          console.log(error);
         });
         
 
