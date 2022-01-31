@@ -1028,11 +1028,11 @@ export default function handler(req, res) {
 
       // correct_word = fs.readFileSync('word.txt', 'utf8')
 
-      fs.readFile("word.txt", "utf-8", (err, data) => {
-        console.log(data);
-        console.log("CorrectWord", data)
-        res.status(200).json(data)
-      });
+      // fs.readFile("word.txt", "utf-8", (err, data) => {
+      //   console.log(data);
+      //   console.log("CorrectWord", data)
+      //   res.status(200).json(data)
+      // });
 
       console.log("4 - 1")
     
