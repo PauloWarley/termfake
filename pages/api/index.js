@@ -1015,15 +1015,15 @@ export default function handler(req, res) {
 
   try {
     console.log("1")
-    correct_word = fs.readFileSync('word.txt', 'utf8')
+    // correct_word = fs.readFileSync('word.txt', 'utf8')
     console.log("2")
   }
   catch{
       console.log("3")
-      fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
-        if (err) throw err;
-        console.log('Saved!');
-      });
+      // fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
+      //   if (err) throw err;
+      //   console.log('Saved!');
+      // });
       console.log("4")
 
       // correct_word = fs.readFileSync('word.txt', 'utf8')
@@ -1039,10 +1039,10 @@ export default function handler(req, res) {
   }
 
   if(word === correct_word){
-    fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
-      if (err) throw err;
-      console.log('Saved!');
-    });
+    // fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
+    //   if (err) throw err;
+    //   console.log('Saved!');
+    // });
   }
 
   console.log("5")
