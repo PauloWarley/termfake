@@ -10,7 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
     fetch: fetch.bind(globalThis) 
 })
 
-export default async function database(res, res){
+export default function database(res, res){
 
     var axios = require('axios');
 
