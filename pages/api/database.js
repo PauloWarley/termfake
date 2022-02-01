@@ -23,8 +23,28 @@ export default function database(req, res){
     
     axios(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
-      res.status(200).json(response.data)
+        console.log(JSON.stringify(response.data));
+
+        var data = JSON.stringify({
+        "word": "otherValue1"
+        });
+
+        var config = {
+        method: 'patch',
+        url: 'https://zuwedejvszpmvxppccvp.supabase.co/rest/v1/word?word=eq.paulo',
+        headers: headers,
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            res.status(200).json(response.data)
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+
     })
     .catch(function (error) {
       console.log(error);
