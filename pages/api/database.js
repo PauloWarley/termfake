@@ -1,16 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://zuwedejvszpmvxppccvp.supabase.co'
 
-// console.log(process.env)
-
-const supabaseKey = process.env.SUPABASE_KEY
-
-const supabase = createClient(supabaseUrl, supabaseKey, { 
-    fetch: fetch.bind(globalThis) 
-})
-
-export default function database(res, res){
+export default function database(req, res){
 
     var axios = require('axios');
 
