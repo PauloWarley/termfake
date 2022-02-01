@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
+var axios = require('axios');
 
 
 export default function database(req, res){
 
-    var axios = require('axios');
 
     // console.log({ 
     //     'apikey': process.env.API_KEY_SUPABASE.replace(/"/g, "").replace(/,/g, ""), 
@@ -23,15 +23,15 @@ export default function database(req, res){
     
     axios(config)
     .then(function (response) {
-        console.log(JSON.stringify(response.data));
+        console.log("Gravado ", JSON.stringify(response.data[0]["word"]));
 
-        var data = JSON.stringify({
-        "word": "otherValue1"
-        });
+        var data = { 
+            word: "11" 
+        }
 
         var config = {
         method: 'patch',
-        url: 'https://zuwedejvszpmvxppccvp.supabase.co/rest/v1/word?word=eq.paulo',
+        url: `https://zuwedejvszpmvxppccvp.supabase.co/rest/v1/word?word=eq.${response.data[0]["word"]}`,
         headers: headers,
         data : data
         };

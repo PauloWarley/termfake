@@ -1012,138 +1012,140 @@ export default function handler(req, res) {
   var correct_word
   var word = req.body.word
 
-
-  try {
-    console.log("1")
-    // correct_word = fs.readFileSync('word.txt', 'utf8')
-    console.log("2")
+  var headers = { 
+    'apikey': process.env.API_KEY_SUPABASE.replace(/"/g, "").replace(/,/g, ""), 
+    'Authorization': process.env.AUTH_SUPABASE
   }
-  catch{
-      console.log("3")
-      // fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
-      //   if (err) throw err;
-      //   console.log('Saved!');
-      // });
-      console.log("4")
-
-      // correct_word = fs.readFileSync('word.txt', 'utf8')
-
-      // fs.readFile("word.txt", "utf-8", (err, data) => {
-      //   console.log(data);
-      //   console.log("CorrectWord", data)
-      //   res.status(200).json(data)
-      // });
-
-      console.log("4 - 1")
-    
-  }
-
-  if(word === correct_word){
-    // fs.writeFile('word.txt', correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, ""), function (err) {
-    //   if (err) throw err;
-    //   console.log('Saved!');
-    // });
-  }
-
-  console.log("5")
-
-  correct_word =  correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-  // correct_word =  correct_word_list[0].normalize('NFD').replace(/[\u0300-\u036f]/g, "")
-  correct_word =  "sonho"
-  
-  
-
-  // console.log("CorrectWord", correct_word)
-
-
-  
-
-  console.log(req.body)
-
-  
 
   var config = {
     method: 'get',
-    url: `https://api.dicionario-aberto.net/word/${word}`,
-    headers: { }
+    url: 'https://zuwedejvszpmvxppccvp.supabase.co/rest/v1/word?select=word',
+    headers: headers
   };
-  
-  axios (config)
+
+  axios(config)
   .then(function (response) {
-    // console.log(JSON.stringify(response.data));
+      console.log("Gravado ", JSON.stringify(response.data[0]["word"]));
 
-    
-    if (word === correct_word || response.data.length != 0){
+      correct_word = response.data[0]["word"]
 
-      var correct_word_split = correct_word.split("")
+      console.log("Palavras", correct_word, word)
 
-      var word_slipt = word.split("")
-    
-      var result = {}
-    
-      for (var i in word_slipt){
-    
-        console.log(word_slipt[i] , correct_word_split[i])
-    
-        if (correct_word.indexOf(word_slipt[i]) == -1){
-          if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-    
-          result[word_slipt[i]].push(
-            { 
-              "exist": false,
-              "position": false,
-              "pos" : i
-            }
-          )
+      if (correct_word === word){
+        var data = { 
+          word: correct_word_list[Math.floor(Math.random() * correct_word_list.length)].normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  
         }
-        else if (word_slipt[i] === correct_word_split[i]){
-          
-          if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-    
-          result[word_slipt[i]].push(
-            { 
-              "exist": true,
-              "position": true,
-              "pos" : i
-            }
-          )
-    
-        }
-        else if (correct_word.indexOf(word_slipt[i]) != -1){
-          
-          if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-    
-          result[word_slipt[i]].push(
-            { 
-              "exist": true,
-              "position": false,
-              "pos" : i
-            }
-          )
-    
-        }
-    
-    
+        var config = {
+        method: 'patch',
+        url: `https://zuwedejvszpmvxppccvp.supabase.co/rest/v1/word?word=eq.${response.data[0]["word"]}`,
+        headers: headers,
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+            console.log(JSON.stringify(response.data));
+            res.status(200).json([])
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
       }
-    
-    
-      res.status(200).json(result)
-    }
-    else {
+      else{
+        console.log(req.body)
 
-      // console.log(response.data)
+        
 
-      res.status(200).json("Palavra Inválida")
+        var config = {
+          method: 'get',
+          url: `https://api.dicionario-aberto.net/word/${word}`,
+          headers: { }
+        };
+        
+        axios (config)
+        .then(function (response) {
+          // console.log(JSON.stringify(response.data));
 
-    }
+          
+          if (word === correct_word || response.data.length != 0){
 
+            var correct_word_split = correct_word.split("")
+
+            var word_slipt = word.split("")
+          
+            var result = {}
+          
+            for (var i in word_slipt){
+          
+              console.log(word_slipt[i] , correct_word_split[i])
+          
+              if (correct_word.indexOf(word_slipt[i]) == -1){
+                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+          
+                result[word_slipt[i]].push(
+                  { 
+                    "exist": false,
+                    "position": false,
+                    "pos" : i
+                  }
+                )
+              }
+              else if (word_slipt[i] === correct_word_split[i]){
+                
+                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+          
+                result[word_slipt[i]].push(
+                  { 
+                    "exist": true,
+                    "position": true,
+                    "pos" : i
+                  }
+                )
+          
+              }
+              else if (correct_word.indexOf(word_slipt[i]) != -1){
+                
+                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+          
+                result[word_slipt[i]].push(
+                  { 
+                    "exist": true,
+                    "position": false,
+                    "pos" : i
+                  }
+                )
+          
+              }
+          
+          
+            }
+          
+          
+            res.status(200).json(result)
+          }
+          else {
+
+            // console.log(response.data)
+
+            res.status(200).json("Palavra Inválida")
+
+          }
+
+
+        })
+        .catch(function (error) {
+          // console.log(error);
+        });
+
+
+
+      }
 
   })
   .catch(function (error) {
-    // console.log(error);
+    console.log(error);
   });
 
-
-  
 
 }
