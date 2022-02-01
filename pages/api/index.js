@@ -1029,7 +1029,7 @@ export default function handler(req, res) {
 
       correct_word = response.data[0]["word"]
 
-      console.log("Palavras", correct_word, word)
+      
 
       if (correct_word === word){
         var data = { 
@@ -1045,8 +1045,63 @@ export default function handler(req, res) {
 
         axios(config)
         .then(function (response) {
-            console.log(JSON.stringify(response.data));
-            res.status(200).json([])
+          console.log(JSON.stringify(response.data));
+          if (word === correct_word || response.data.length != 0){
+
+            var correct_word_split = correct_word.split("")
+
+            var word_slipt = word.split("")
+          
+            var result = {}
+          
+            for (var i in word_slipt){
+          
+              console.log(word_slipt[i] , correct_word_split[i])
+          
+              if (correct_word.indexOf(word_slipt[i]) == -1){
+                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+          
+                result[word_slipt[i]].push(
+                  { 
+                    "exist": false,
+                    "position": false,
+                    "pos" : i
+                  }
+                )
+              }
+              else if (word_slipt[i] === correct_word_split[i]){
+                
+                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+          
+                result[word_slipt[i]].push(
+                  { 
+                    "exist": true,
+                    "position": true,
+                    "pos" : i
+                  }
+                )
+          
+              }
+              else if (correct_word.indexOf(word_slipt[i]) != -1){
+                
+                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+          
+                result[word_slipt[i]].push(
+                  { 
+                    "exist": true,
+                    "position": false,
+                    "pos" : i
+                  }
+                )
+          
+              }
+          
+          
+            }
+          
+          
+            res.status(200).json(result)
+          }
         })
         .catch(function (error) {
         console.log(error);
@@ -1146,6 +1201,8 @@ export default function handler(req, res) {
   .catch(function (error) {
     console.log(error);
   });
+
+
 
 
 }
