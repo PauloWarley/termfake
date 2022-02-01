@@ -203,20 +203,26 @@ export default function Home() {
                   document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter place")
             
                 }
-                if (!letras[i][j].exist && !letras[i][j].position){
+                if (!letras[i][j].exist && !letras[i][j].position ){
 
-                  document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter wrong")
-                  
                   document.getElementById(`kbd_${i.toLowerCase()}`).setAttribute("class", "wrong")
                   
-                  var wrongLetterTemp = wrongLetter
-                  wrongLetterTemp.push(i)
+                  // var wrongLetterTemp = wrongLetter
+                  // wrongLetterTemp.push(i)
 
-                  console.log(wrongLetterTemp, "temp")
-                  setWrongLetter(wrongLetterTemp)
+                  // console.log(wrongLetterTemp, "temp")
+                  // setWrongLetter(wrongLetterTemp)
 
+                  if (letras[i][j].pos != -1){
+                    document.getElementById("board").childNodes[position[0]-1].childNodes[letras[i][j].pos].setAttribute("class", "letter wrong")
+                  
+                  }
 
                 }
+            
+
+
+
 
               }
 

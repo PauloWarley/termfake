@@ -1048,59 +1048,8 @@ export default function handler(req, res) {
           console.log(JSON.stringify(response.data));
           if (word === correct_word || response.data.length != 0){
 
-            var correct_word_split = correct_word.split("")
-
-            var word_slipt = word.split("")
-          
-            var result = {}
-          
-            for (var i in word_slipt){
-          
-              console.log(word_slipt[i] , correct_word_split[i])
-          
-              if (correct_word.indexOf(word_slipt[i]) == -1){
-                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-          
-                result[word_slipt[i]].push(
-                  { 
-                    "exist": false,
-                    "position": false,
-                    "pos" : i
-                  }
-                )
-              }
-              else if (word_slipt[i] === correct_word_split[i]){
-                
-                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-          
-                result[word_slipt[i]].push(
-                  { 
-                    "exist": true,
-                    "position": true,
-                    "pos" : i
-                  }
-                )
-          
-              }
-              else if (correct_word.indexOf(word_slipt[i]) != -1){
-                
-                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-          
-                result[word_slipt[i]].push(
-                  { 
-                    "exist": true,
-                    "position": false,
-                    "pos" : i
-                  }
-                )
-          
-              }
-          
-          
-            }
-          
-          
-            res.status(200).json(result)
+            conference(correct_word, word)
+            
           }
         })
         .catch(function (error) {
@@ -1124,61 +1073,8 @@ export default function handler(req, res) {
 
           
           if (word === correct_word || response.data.length != 0){
-
-            var correct_word_split = correct_word.split("")
-
-            var word_slipt = word.split("")
-          
-            var result = {}
-          
-            for (var i in word_slipt){
-          
-              console.log(word_slipt[i] , correct_word_split[i])
-          
-              if (correct_word.indexOf(word_slipt[i]) == -1){
-                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-          
-                result[word_slipt[i]].push(
-                  { 
-                    "exist": false,
-                    "position": false,
-                    "pos" : i
-                  }
-                )
-              }
-              else if (word_slipt[i] === correct_word_split[i]){
-                
-                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-          
-                result[word_slipt[i]].push(
-                  { 
-                    "exist": true,
-                    "position": true,
-                    "pos" : i
-                  }
-                )
-          
-              }
-              else if (correct_word.indexOf(word_slipt[i]) != -1){
-                
-                if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
-          
-                result[word_slipt[i]].push(
-                  { 
-                    "exist": true,
-                    "position": false,
-                    "pos" : i
-                  }
-                )
-          
-              }
-          
-          
+              conference(correct_word, word)
             }
-          
-          
-            res.status(200).json(result)
-          }
           else {
 
             // console.log(response.data)
@@ -1202,7 +1098,80 @@ export default function handler(req, res) {
     console.log(error);
   });
 
+  function conference(correct_word, word){
+    var correct_word_split = correct_word.split("")
 
+    var word_slipt = word.split("")
+  
+    var result = {}
+  
+    for (var i in word_slipt){
+  
+      console.log(word_slipt[i] , correct_word_split[i])
+  
+      if (correct_word.indexOf(word_slipt[i]) == -1){
+        if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+  
+        result[word_slipt[i]].push(
+          { 
+            "exist": false,
+            "position": false,
+            "pos" : i
+          }
+        )
+      }
+      else if (word_slipt[i] === correct_word_split[i]){
+        
+        if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+  
+        result[word_slipt[i]].push(
+          { 
+            "exist": true,
+            "position": true,
+            "pos" : i
+          }
+        )
+  
+      }
+      else if (correct_word.indexOf(word_slipt[i]) != -1){
+        
+        if (result[word_slipt[i]] === undefined) result[word_slipt[i]] = [];
+  
+          //Quantidade dessa letra na palavra correta
+          var qntd = correct_word.split(correct_word_split[i]).length-1
+          
+          console.log("teste", result[word_slipt[i]].length, qntd)
+
+          if (result[word_slipt[i]].length+1 <= qntd){
+            result[word_slipt[i]].push(
+              { 
+                "exist": true,
+                "position": false,
+                "pos" : i
+              }
+            )
+          }
+          else{
+            result[word_slipt[i]].push(
+              { 
+                "exist": false,
+                "position": false,
+                "pos" : i
+              }
+            )
+            
+          }
+
+          
+  
+      }
+  
+  
+    }
+  
+  
+    res.status(200).json(result)
+  }
 
 
 }
